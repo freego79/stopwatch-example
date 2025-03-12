@@ -13,7 +13,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.ui.Modifier
-import cz.freego.tutorial.stopwatchexample.ui.component.TestCompose
+import cz.freego.tutorial.stopwatchexample.ui.TestCompose
 import cz.freego.tutorial.stopwatchexample.ui.theme.StopWatchExampleTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -35,7 +35,8 @@ class MainActivity : ComponentActivity() {
                     }
                 ) { innerPadding ->
                     TestCompose(
-                        modifier = Modifier.padding(innerPadding)
+                        modifier = Modifier.padding(innerPadding),
+                        elapsedSeconds = 0,
                     )
                 }
             }

@@ -1,4 +1,4 @@
-package cz.freego.tutorial.stopwatchexample.ui.component
+package cz.freego.tutorial.stopwatchexample.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,8 +14,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import cz.freego.tutorial.stopwatchexample.ui.theme.StopWatchExampleTheme
+import cz.freego.tutorial.stopwatchexample.viewmodel.StopWatchViewModel
+import cz.freego.tutorial.stopwatchexample.viewmodel.rememberStopWatchViewModel
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
@@ -23,23 +24,23 @@ import java.util.concurrent.TimeUnit
 fun StopWatchCompose(
     modifier: Modifier = Modifier,
     showButtons: Boolean = true,
-    viewModel: StopWatchViewModel = viewModel(),
-    // viewModel() je funkce, která je součástí Jetpack Compose a zajišťuje, že ViewModel je
-    // správně přiřazen k životnímu cyklu komponenty, např. aktivity nebo fragmentu. Tím pádem se
-    // stav ve StopWatchViewModel neztratí při otočení obrazovky.
+    viewModel: StopWatchViewModel = rememberStopWatchViewModel(),
 ) {
     Card {
         Column(
             modifier = modifier.padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = formatTime(viewModel.elapsedTime), style = MaterialTheme.typography.headlineMedium)
+            Text(
+                text = formatTime(viewModel.viewState.elapsedTime),
+                style = MaterialTheme.typography.headlineMedium
+            )
             if (showButtons) {
                 Row {
                     Button(onClick = { viewModel.startPause() }) {
                         Text(
                             when {
-                                viewModel.elapsedTime > 0L && !viewModel.running -> "RESUME"
+                                viewModel.viewState.elapsedTime > 0L && !viewModel.running -> "RESUME"
                                 viewModel.running -> "PAUSE"
                                 else -> "START"
                             }
